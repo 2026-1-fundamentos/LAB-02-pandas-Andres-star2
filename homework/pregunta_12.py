@@ -5,7 +5,7 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
-
+import pandas as pd
 def pregunta_12():
     """
     Construya una tabla que contenga `c0` y una lista separada por ','
@@ -22,3 +22,15 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
+    def unir(valores):
+        return ",".join(sorted(valores.astype(str)))
+    
+    df = pd.read_csv("files/input/tbl2.tsv", sep="\t")
+    copia = df.copy()
+
+    copia["c5"] = copia["c5a"] + ":" + copia["c5b"].astype(str)
+
+    return copia.groupby("c0")[["c5"]].agg(unir).reset_index()
+
+print(pregunta_12())
+
